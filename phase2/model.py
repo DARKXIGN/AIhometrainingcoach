@@ -58,7 +58,7 @@ class ExerciseDataset(Dataset):
             if label not in EXERCISE_LABELS:
                 continue
 
-            label_idx = int(self.label_enc.transform([label])[0])
+            label_idx = int(self.label_enc.transform([label]).tolist()[0])
             lm_seqs   = [np.array(fr["landmarks"]).flatten() for fr in data["frames"]]
 
             stride = max(1, seq_len // 2)
@@ -211,7 +211,7 @@ class ExerciseClassifier:
     """학습된 체크포인트로 실시간 운동 분류"""
     def __init__(self, ckpt_path: Optional[str] = None):
         path = Path(ckpt_path) if ckpt_path else CHECKPOINT_DIR / "best_model.pth"
-        ckpt = torch.load(str(path), map_location=DEVICE)
+        ckpt = torch.load(str(path), map_location=DEVICE, weights_only=False)
 
         self.label_classes = ckpt["label_classes"]
         num_classes        = len(self.label_classes)
@@ -237,8 +237,8 @@ class ExerciseClassifier:
         seq = torch.from_numpy(np.stack(self.buffer)).unsqueeze(0).to(DEVICE)
         with torch.no_grad():
             probs   = torch.softmax(self.model(seq), dim=1)[0]
-            idx     = probs.argmax().item()
-        return self.label_classes[idx], float(probs[idx])
+            idx     = int(probs.argmax().item())
+        return self.label_classes[idx], float(probs[idx].item())
 
 
 if __name__ == "__main__":

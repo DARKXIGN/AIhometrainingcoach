@@ -1,0 +1,44 @@
+# ── Virtual environment ──────────────────
+venv/
+.venv/
+env/
+
+# ── Python cache ─────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ── Collected training data ──────────────
+data/raw/
+data/processed/
+
+# ── Model files ──────────────────────────
+models/checkpoints/
+models/exported/
+*.pth
+*.onnx
+*.tflite
+
+# ── TensorFlow / ONNX artifacts ──────────
+models/tf_saved_model/
+
+# ── Jupyter notebooks ────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── IDE ──────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ── OS ───────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs & temp ──────────────────────────
+*.log
+tmp/
+temp/

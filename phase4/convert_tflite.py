@@ -41,7 +41,7 @@ def export_onnx() -> str:
         print("[ERROR] 체크포인트 없음. Phase 2 학습을 먼저 완료하세요.")
         sys.exit(1)
 
-    ckpt        = torch.load(str(ckpt_path), map_location="cpu")
+    ckpt        = torch.load(str(ckpt_path), map_location="cpu", weights_only=False)
     num_classes = len(ckpt["label_classes"])
 
     model = ExerciseLSTM(num_classes=num_classes)
